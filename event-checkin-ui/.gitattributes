@@ -1,29 +1,48 @@
-# Set default behavior to automatically normalize line endings
-* text=auto
+# Auto normalize line endings for all text files
+* text=auto eol=lf
 
-# Specify the types of files to treat as text
-*.js text
-*.jsx text
-*.ts text
-*.tsx text
-*.json text
-*.md text
+# Handle Windows line endings gracefully for these common file types
+*.{js,jsx,ts,tsx,css,scss,html,json,md,yml,yaml,prisma} text eol=lf
 
-# Binary files
+# Ensure consistent line endings for config files
+*.{env,gitignore,gitattributes,prettierrc,eslintrc,editorconfig} text eol=lf
+
+# Treat lock files and binaries as binary
+package-lock.json binary
+yarn.lock binary
+pnpm-lock.yaml binary
+*.db binary
 *.png binary
 *.jpg binary
 *.jpeg binary
 *.gif binary
-*.svg binary
-*.zip binary
-*.tar binary
-*.gz binary
-*.tgz binary
+*.ico binary
 *.pdf binary
-*.exe binary
-*.dll binary
-*.so binary
-*.dylib binary
+*.zip binary
 
-# Merge strategies
-*.lock merge=union
+# TypeScript and Prisma should use LF for cross-platform compatibility
+*.ts text eol=lf
+*.tsx text eol=lf
+*.prisma text eol=lf
+
+# Use LF for scripts and environment files
+*.sh text eol=lf
+*.env text eol=lf
+
+# Better diffs for specific languages
+*.md diff=markdown
+*.json diff=json
+*.yml diff=yaml
+*.yaml diff=yaml
+*.prisma diff=sql
+
+# Ignore local IDE/editor settings from diffing
+.vscode/* linguist-vendored
+.idea/* linguist-vendored
+
+# Mark dist and build outputs as binary (don’t diff large bundles)
+dist/* binary
+build/* binary
+
+# GitHub language detection overrides
+*.lock linguist-generated
